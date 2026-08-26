@@ -52,9 +52,10 @@ export async function searchCatalog(params: {
   page?: number;
   pageSize?: number;
 }): Promise<CatalogResult> {
+  // Empty strings must become null — an empty p_category_slug would match nothing.
   const { data, error } = await anonServerClient().rpc("search_products", {
-    p_query: params.query ?? null,
-    p_category_slug: params.category ?? null,
+    p_query: params.query?.trim() ? params.query.trim() : null,
+    p_category_slug: params.category?.trim() ? params.category.trim() : null,
     p_sort: params.sort ?? "newest",
     p_filter: params.filter ?? null,
     p_page: params.page ?? 1,
