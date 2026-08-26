@@ -39,9 +39,14 @@ export default async function OrdersPage({
   const q = typeof sp.q === "string" ? sp.q.trim() : "";
   const from = typeof sp.from === "string" ? sp.from : "";
   const to = typeof sp.to === "string" ? sp.to : "";
+  const location = typeof sp.location === "string" ? sp.location : "";
   const page = Math.max(1, Number.parseInt(String(sp.page ?? "1"), 10) || 1);
 
   const supabase = await authServerClient();
+  const { data: locationRows } = await supabase
+    .from("locations")
+    .select("id, name")
+    .order("sort_order");
   let query = supabase
     .from("orders")
     .select(
@@ -52,6 +57,8 @@ export default async function OrdersPage({
     .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
 
   if (status) query = query.eq("status", status);
+  if (location === "other") query = query.eq("is_other_location", true);
+  else if (location) query = query.eq("location_id", location);
   if (from) query = query.gte("created_at", `${from}T00:00:00`);
   if (to) query = query.lte("created_at", `${to}T23:59:59`);
   if (q) {
@@ -66,7 +73,7 @@ export default async function OrdersPage({
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   const buildLink = (params: Record<string, string>) => {
-    const spOut = new URLSearchParams({ status, q, from, to, ...params });
+    const spOut = new URLSearchParams({ status, q, from, to, location, ...params });
     for (const [k, v] of [...spOut.entries()]) if (!v) spOut.delete(k);
     return `/admin/orders?${spOut.toString()}`;
   };
@@ -93,6 +100,19 @@ export default async function OrdersPage({
               {label}
             </option>
           ))}
+        </select>
+        <select
+          name="location"
+          defaultValue={location}
+          className="h-11 rounded-xl border border-stone-300 bg-white px-2 text-sm"
+        >
+          <option value="">All locations</option>
+          {(locationRows ?? []).map((l) => (
+            <option key={l.id} value={l.id}>
+              {l.name}
+            </option>
+          ))}
+          <option value="other">Shop pickup (Other)</option>
         </select>
         <label className="text-xs text-stone-500">
           From

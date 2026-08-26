@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /product/
+Disallow: /admin
+Disallow: /api/
+Disallow: /order/
+Disallow: /find-order
+Disallow: /bucket

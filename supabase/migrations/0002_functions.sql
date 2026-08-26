@@ -230,6 +230,20 @@ begin
       'min_order_value', v_min_order, 'subtotal', v_subtotal);
   end if;
 
+  -- ---- stock check first: all-or-nothing --------------------------------
+  -- Customers must hear about missing stock before any offer recalculation.
+  select coalesce(jsonb_agg(jsonb_build_object(
+           'product_id', product_id, 'name', name,
+           'requested', quantity, 'available', greatest(available_qty, 0))), '[]'::jsonb)
+    into v_shortages
+  from _priced where quantity > available_qty;
+
+  if jsonb_array_length(v_shortages) > 0 then
+    return jsonb_build_object('ok', false, 'code', 'INSUFFICIENT_STOCK',
+      'message', 'Some items are no longer available in the requested quantity. Please update your bucket and try again.',
+      'items', v_shortages);
+  end if;
+
   -- ---- pick the highest qualifying offer whose gift is in stock -------
   for v_offer in
     select o.id, o.name, o.threshold, o.free_product_id, o.free_qty,
@@ -270,19 +284,6 @@ begin
           'free_product_name', v_ap_product_name,
           'free_qty', v_ap_free_qty, 'threshold', v_ap_threshold)
       end);
-  end if;
-
-  -- ---- stock check: all-or-nothing ------------------------------------
-  select coalesce(jsonb_agg(jsonb_build_object(
-           'product_id', product_id, 'name', name,
-           'requested', quantity, 'available', greatest(available_qty, 0))), '[]'::jsonb)
-    into v_shortages
-  from _priced where quantity > available_qty;
-
-  if jsonb_array_length(v_shortages) > 0 then
-    return jsonb_build_object('ok', false, 'code', 'INSUFFICIENT_STOCK',
-      'message', 'Some items are no longer available in the requested quantity. Please update your bucket and try again.',
-      'items', v_shortages);
   end if;
 
   -- ---- allocate order number -------------------------------------------
