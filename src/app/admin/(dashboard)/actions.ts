@@ -145,6 +145,8 @@ export async function setProductActive(id: string, active: boolean): Promise<Act
   return { ok: true };
 }
 
+const BUCKET = "product-images";
+
 const IMAGE_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
@@ -166,20 +168,35 @@ export async function uploadProductImage(formData: FormData): Promise<ActionResu
   // storage write uses the service client (bucket policies may not exist);
   // admin identity was verified above
   const service = serviceClient();
+
+  // The bucket must be PUBLIC or the image URLs we store will 404 for
+  // customers. Create it if missing and repair visibility if someone made
+  // it private in the dashboard.
+  const { data: bucket } = await service.storage.getBucket(BUCKET);
+  if (!bucket) {
+    const { error } = await service.storage.createBucket(BUCKET, {
+      public: true,
+      fileSizeLimit: 5 * 1024 * 1024,
+      allowedMimeTypes: Object.keys(IMAGE_TYPES),
+    });
+    if (error) return fail(`Could not create the image bucket: ${error.message}`);
+  } else if (!bucket.public) {
+    const { error } = await service.storage.updateBucket(BUCKET, { public: true });
+    if (error) return fail(`Image bucket is private and could not be fixed: ${error.message}`);
+  }
+
   const path = `${productId}/${Date.now()}.${ext}`;
   const { error: uploadError } = await service.storage
-    .from("product-images")
+    .from(BUCKET)
     .upload(path, Buffer.from(await file.arrayBuffer()), {
       contentType: file.type,
       upsert: true,
     });
   if (uploadError) {
-    return fail(
-      `Upload failed: ${uploadError.message}. Make sure the "product-images" bucket exists (Storage → New bucket → public).`
-    );
+    return fail(`Upload failed: ${uploadError.message}`);
   }
 
-  const { data: pub } = service.storage.from("product-images").getPublicUrl(path);
+  const { data: pub } = service.storage.from(BUCKET).getPublicUrl(path);
   const url = pub.publicUrl;
 
   const supabase = await authServerClient();

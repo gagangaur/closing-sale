@@ -21,7 +21,11 @@ production project:
    it is idempotent: it adds the `sale_subtitle`, `legacy_badge`,
    `thank_you_message` and `sale_days` settings and replaces old demo text
    (shop name, headline, message) without touching values you already edited.
-3. Storage → **New bucket** → name `product-images`, enable **Public bucket**.
+3. Storage bucket `product-images` is **created automatically (as public) on the
+   first image upload** from Admin → Products. If you create it manually in
+   Storage → New bucket, you must enable **Public bucket** — a private bucket
+   makes every product image 404 for customers (the app repairs this on the
+   next upload, but only then).
 4. Authentication → Users → **Add user** (the shopkeeper's email + password,
    tick auto-confirm). Then SQL Editor:
    ```sql
