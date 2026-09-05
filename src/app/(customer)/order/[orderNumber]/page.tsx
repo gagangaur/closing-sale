@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { CopyText } from "@/components/customer/CopyText";
 import { OrderSummary } from "@/components/customer/OrderSummary";
+import { DEFAULT_SHOP_NAME } from "@/lib/branding";
 import { serviceClient } from "@/lib/supabase/service";
 import type { OrderView } from "@/lib/types";
 import {
@@ -60,7 +61,7 @@ export default async function OrderPage({
   const message = buildWhatsAppMessage(
     { ...(order as unknown as Omit<WhatsAppOrder, "applied_offer">), applied_offer: null },
     {
-      shop_name: settingsMap.shop_name ?? "Closing Sale",
+      shop_name: settingsMap.shop_name ?? DEFAULT_SHOP_NAME,
       payment_instructions: settingsMap.payment_instructions ?? "",
       collection_instructions: settingsMap.collection_instructions ?? "",
     }
@@ -73,7 +74,7 @@ export default async function OrderPage({
   return (
     <div className="mx-auto max-w-2xl space-y-4">
       {justPlaced && (
-        <div className="rounded-2xl bg-green-600 p-4 text-white">
+        <div className="rounded-2xl bg-cta p-4 text-white">
           <p className="text-lg font-extrabold">✅ Order placed!</p>
           <p className="mt-1 text-sm text-green-50">
             Your items are reserved. Now send the order to the shop on WhatsApp so
@@ -87,7 +88,7 @@ export default async function OrderPage({
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex h-12 items-center justify-center gap-2 rounded-xl bg-green-600 text-sm font-bold text-white shadow-sm"
+          className="flex h-12 items-center justify-center gap-2 rounded-xl bg-cta text-sm font-bold text-white shadow-sm"
         >
           Send order on WhatsApp
         </a>

@@ -40,7 +40,7 @@ export function AddToBucket({
     return (
       <button
         onClick={() => addItem(product, 1)}
-        className={`${btnBase} w-full rounded-lg bg-sale text-white shadow-sm transition-transform active:scale-95`}
+        className={`${btnBase} w-full rounded-lg bg-cta text-white shadow-sm transition-transform active:scale-95`}
       >
         Add to bucket
       </button>
@@ -49,12 +49,12 @@ export function AddToBucket({
 
   return (
     <div
-      className={`${size === "lg" ? "h-12" : "h-9"} flex w-full items-stretch overflow-hidden rounded-lg border-2 border-sale`}
+      className={`${size === "lg" ? "h-12" : "h-9"} flex w-full items-stretch overflow-hidden rounded-lg border-2 border-cta`}
     >
       <button
         aria-label={`Decrease quantity of ${product.name}`}
         onClick={() => setQuantity(product.id, qty - 1)}
-        className="flex-1 bg-sale-soft text-lg font-bold text-sale active:bg-red-100"
+        className="flex-1 bg-cta-soft text-lg font-bold text-cta active:bg-green-100"
       >
         −
       </button>
@@ -68,7 +68,7 @@ export function AddToBucket({
         aria-label={`Increase quantity of ${product.name}`}
         onClick={() => addItem(product, 1)}
         disabled={atMax}
-        className="flex-1 bg-sale-soft text-lg font-bold text-sale active:bg-red-100 disabled:cursor-not-allowed disabled:text-stone-300"
+        className="flex-1 bg-cta-soft text-lg font-bold text-cta active:bg-green-100 disabled:cursor-not-allowed disabled:text-stone-300"
       >
         +
       </button>

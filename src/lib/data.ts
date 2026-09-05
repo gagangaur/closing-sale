@@ -1,4 +1,5 @@
 import "server-only";
+import { DEFAULT_SHOP_NAME } from "@/lib/branding";
 import { anonServerClient } from "@/lib/supabase/anon-server";
 import type {
   CatalogResult,
@@ -10,9 +11,14 @@ import type {
 } from "@/lib/types";
 
 const SETTINGS_DEFAULTS: PublicSettings = {
-  shop_name: "Closing Sale",
+  shop_name: DEFAULT_SHOP_NAME,
   sale_title: "CLOSING SALE",
-  sale_message: "",
+  sale_subtitle: "Heavy Discount SALE",
+  sale_message:
+    "After 28 years, we are closing our doors due to an unfortunate and deeply personal circumstance.",
+  legacy_badge: "28 years · A family business",
+  thank_you_message: "Thank you, Mathura, for 28 wonderful years.",
+  sale_days: "ONLY ON SATURDAY & SUNDAY",
   min_order_value: 0,
   low_stock_threshold: 10,
   shop_address: "",

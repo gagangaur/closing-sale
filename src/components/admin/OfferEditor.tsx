@@ -20,7 +20,7 @@ export type OfferRow = {
 type PickerProduct = { id: string; name: string; available_qty: number };
 
 const inputCls =
-  "h-10 w-full rounded-lg border border-stone-300 px-3 text-sm outline-none focus:border-sale focus:ring-2 focus:ring-sale/20";
+  "h-10 w-full rounded-lg border border-stone-300 px-3 text-sm outline-none focus:border-navy focus:ring-2 focus:ring-navy/20";
 
 function OfferForm({
   products,
@@ -124,11 +124,11 @@ function OfferForm({
           type="checkbox"
           checked={form.active}
           onChange={(e) => setForm({ ...form, active: e.target.checked })}
-          className="h-4 w-4 accent-sale"
+          className="h-4 w-4 accent-navy"
         />
         Active
       </label>
-      {error && <p className="text-sm font-semibold text-sale">{error}</p>}
+      {error && <p className="text-sm font-semibold text-danger">{error}</p>}
       <div className="flex gap-2">
         <button
           onClick={submit}
@@ -208,7 +208,7 @@ export function OfferEditor({
                 <p className="text-sm font-semibold">{offer.name}</p>
                 <p className="text-xs text-stone-500">
                   Spend ₹{offer.threshold} → {offer.free_qty} × {offer.free_product_name}{" "}
-                  <span className={offer.free_available < offer.free_qty ? "font-bold text-sale" : ""}>
+                  <span className={offer.free_available < offer.free_qty ? "font-bold text-danger" : ""}>
                     ({offer.free_available} gift stock left)
                   </span>
                 </p>

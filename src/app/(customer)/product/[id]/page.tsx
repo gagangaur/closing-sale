@@ -117,7 +117,7 @@ export default async function ProductPage({
         </div>
       )}
 
-      <p className="rounded-xl bg-deal-soft px-3 py-2 text-xs leading-relaxed text-stone-700">
+      <p className="rounded-xl bg-navy-soft px-3 py-2 text-xs leading-relaxed text-stone-700">
         Closing sale item — final sale. Inspect before accepting at collection. No
         returns or exchanges after purchase. {settings.payment_instructions}
       </p>

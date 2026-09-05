@@ -87,7 +87,7 @@ export default async function OrdersPage({
           name="q"
           defaultValue={q}
           placeholder="Order ID, customer or phone…"
-          className="h-11 min-w-52 flex-1 rounded-xl border border-stone-300 bg-white px-3 text-sm outline-none focus:border-sale"
+          className="h-11 min-w-52 flex-1 rounded-xl border border-stone-300 bg-white px-3 text-sm outline-none focus:border-navy"
         />
         <select
           name="status"
@@ -138,7 +138,7 @@ export default async function OrdersPage({
       </form>
 
       {error ? (
-        <p className="rounded-xl bg-sale-soft p-4 text-sm font-semibold text-sale-dark">
+        <p className="rounded-xl bg-danger-soft p-4 text-sm font-semibold text-danger-dark">
           Could not load orders: {error.message}
         </p>
       ) : rows.length === 0 ? (

@@ -31,7 +31,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
       <header className="sticky top-0 z-40 border-b border-stone-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <Link href="/admin" className="font-bold">
-            Closing Sale <span className="text-sale">Admin</span>
+            Radha Krishna Book Depo <span className="text-navy">Admin</span>
           </Link>
           <div className="flex items-center gap-2 text-sm text-stone-500">
             <Link

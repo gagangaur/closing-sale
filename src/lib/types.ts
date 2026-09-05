@@ -62,7 +62,11 @@ export type CollectionLocation = {
 export type PublicSettings = {
   shop_name: string;
   sale_title: string;
+  sale_subtitle: string;
   sale_message: string;
+  legacy_badge: string;
+  thank_you_message: string;
+  sale_days: string;
   min_order_value: number;
   low_stock_threshold: number;
   shop_address: string;

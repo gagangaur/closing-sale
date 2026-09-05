@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { DEFAULT_SHOP_NAME } from "@/lib/branding";
 import { serviceClient } from "@/lib/supabase/service";
 import {
   buildWhatsAppMessage,
@@ -41,7 +42,7 @@ async function getOrderSettings() {
     ]);
   const map = Object.fromEntries((data ?? []).map((r) => [r.key, r.value]));
   return {
-    shop_name: map.shop_name ?? "Closing Sale",
+    shop_name: map.shop_name ?? DEFAULT_SHOP_NAME,
     whatsapp_number: map.whatsapp_number ?? "",
     payment_instructions: map.payment_instructions ?? "",
     collection_instructions: map.collection_instructions ?? "",

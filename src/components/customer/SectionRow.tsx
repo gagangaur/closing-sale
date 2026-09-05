@@ -19,7 +19,7 @@ export function SectionRow({
   return (
     <section aria-label={title}>
       <div className="mb-2 flex items-baseline gap-2">
-        <h2 className={`text-lg font-bold ${accent ? "text-sale" : ""}`}>{title}</h2>
+        <h2 className={`text-lg font-bold ${accent ? "text-navy" : ""}`}>{title}</h2>
         {subtitle && <span className="text-xs text-stone-500">{subtitle}</span>}
       </div>
       <div className="scroll-row -mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-2">

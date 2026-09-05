@@ -123,3 +123,23 @@ security, constraints). Browser E2E performed on the running site
    and Open Graph metadata are in place). Trivial to add if wanted.
 4. **Real-device mobile pass** — mobile behavior verified via viewport
    emulation; a quick check on an actual phone before launch is recommended.
+
+## Prompt 4 — Branding & palette update
+
+Content + styling update for Radha Krishna Book Depo (`updated_prompt.md`).
+No functional or business-rule changes.
+
+| # | Requirement | Status | Where / notes |
+|---|---|---|---|
+| 1 | Shop name "Radha Krishna Book Depo" everywhere; "Sharma General Store" removed | ✅ | `shop_name` setting (seed + `0005_branding.sql`), `lib/branding.ts` fallback, metadata, docs |
+| 2 | "Everything Must Go" removed from the hero and everywhere else | ✅ | `sale_title` = "CLOSING SALE"; 0005 rewrites the old default text |
+| 3 | Headline "CLOSING SALE" with visually prominent "Heavy Discount SALE" | ✅ | `SaleBanner` gold sub-headline block; `sale_subtitle` setting |
+| 4 | 28-year legacy badge, respectful farewell message, "Thank you, Mathura, for 28 wonderful years." | ✅ | `legacy_badge`, `sale_message`, `thank_you_message` settings; badge styled as legacy, not discount |
+| 5 | "ONLY ON SATURDAY & SUNDAY" extremely visible | ✅ | gold "Limited Stock / ONLY ON SATURDAY & SUNDAY" strip in the hero **and** a persistent strip under the header on every customer page (`(customer)/layout.tsx`); `sale_days` setting |
+| 6 | WhatsApp-shareable information card; policy sentence kept verbatim | ✅ | `ShareSale` card + `buildShareMessage` → `wa.me/?text=` (contact picker) + Copy message; `POLICY_LINE` constant reproduced unchanged |
+| 7 | Palette: navy primary, green CTAs, gold small accents, red minimal | ✅ | `globals.css` tokens `navy` / `cta` / `gold` / `danger`; red only for errors, out-of-stock, destructive actions |
+| 8 | No marketing discount percentages anywhere | ✅ | hero, share message, metadata and docs contain no "% OFF" copy |
+| 9 | Per-product % OFF badges kept as factual data | ✅ | derived from `products.discount_pct` (MRP vs price); badge recoloured green, not red |
+| 10 | Gift offers unchanged, restyled to the new palette | ✅ | thresholds/products untouched; tier pill uses a green ring |
+| 11 | Business rules untouched (min ₹500, reserve online / collect & pay, no online payment, no delivery, final sale) | ✅ | no changes to `place_order`, checkout, prices or product data |
+| 12 | All new text admin-editable; existing projects upgradable | ✅ | Admin → Settings exposes `sale_subtitle`, `legacy_badge`, `thank_you_message`, `sale_days`; idempotent `0005_branding.sql`, also bundled in `setup_all.sql` |

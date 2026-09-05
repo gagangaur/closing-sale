@@ -70,7 +70,7 @@ export function SearchControls({ categories }: { categories: Category[] }) {
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Search products, categories…"
           aria-label="Search products"
-          className="h-12 w-full rounded-xl border border-stone-300 bg-white pl-11 pr-4 text-base shadow-sm outline-none focus:border-sale focus:ring-2 focus:ring-sale/20"
+          className="h-12 w-full rounded-xl border border-stone-300 bg-white pl-11 pr-4 text-base shadow-sm outline-none focus:border-navy focus:ring-2 focus:ring-navy/20"
         />
       </div>
 
@@ -79,7 +79,7 @@ export function SearchControls({ categories }: { categories: Category[] }) {
           onClick={() => pushParams({ category: "" })}
           className={`shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-medium ${
             activeCategory === ""
-              ? "border-sale bg-sale text-white"
+              ? "border-navy bg-navy text-white"
               : "border-stone-300 bg-white text-stone-700"
           }`}
         >
@@ -93,7 +93,7 @@ export function SearchControls({ categories }: { categories: Category[] }) {
             }
             className={`shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-medium ${
               activeCategory === c.slug
-                ? "border-sale bg-sale text-white"
+                ? "border-navy bg-navy text-white"
                 : "border-stone-300 bg-white text-stone-700"
             }`}
           >

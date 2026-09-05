@@ -1,8 +1,10 @@
-# Closing Sale — Reservation & Collection Website
+# Radha Krishna Book Depo — Closing Sale (Reservation & Collection Website)
 
-A mobile-first web application for a physical shop running a closing/clearance
-sale. Customers browse products, build a **bucket**, reserve an order and get a
-unique **Order ID** — then collect and pay at a pickup point. **No online
+A mobile-first web application for **Radha Krishna Book Depo**, Mathura — a
+family shop closing after 28 years and running a heavy-discount closing sale
+**on Saturdays & Sundays only**. Customers browse products, build a **bucket**,
+reserve an order and get a unique **Order ID** — then collect and pay at a
+pickup point. **No online
 payment. No home delivery.** WhatsApp is used for communication; the database
 is the source of truth.
 
@@ -19,14 +21,18 @@ supabase/
   migrations/0001_schema.sql      # tables, constraints, indexes, default settings
   migrations/0002_functions.sql   # place_order, update_order_status, search, lookup
   migrations/0003_rls.sql         # row-level security policies
+  migrations/0004_admin.sql       # admin dashboard functions
+  migrations/0005_branding.sql    # Radha Krishna Book Depo branding + hero settings (idempotent)
+  setup_all.sql                   # 0001–0005 + seed in one file, for a fresh project
   storage.sql                     # product-images bucket + policies
   seed.sql                        # demo data (remove before production)
+  reset_demo_data.sql             # wipes demo rows before go-live
 src/
   app/(customer)/                 # catalog, product, bucket, order pages
   app/admin/                      # admin login + guarded dashboard
   app/api/                        # order placement, lookup, catalog search
-  components/                     # customer UI, cart state, admin bits
-  lib/                            # supabase clients, data access, formatting
+  components/                     # customer UI (hero, share card, catalog), cart state, admin bits
+  lib/                            # supabase clients, data access, formatting, branding constants
 ```
 
 ## Setup
@@ -38,8 +44,14 @@ src/
    1. `supabase/migrations/0001_schema.sql`
    2. `supabase/migrations/0002_functions.sql`
    3. `supabase/migrations/0003_rls.sql`
-   4. `supabase/storage.sql`
-   5. `supabase/seed.sql` *(development demo data — optional)*
+   4. `supabase/migrations/0004_admin.sql`
+   5. `supabase/migrations/0005_branding.sql`
+   6. `supabase/storage.sql`
+   7. `supabase/seed.sql` *(development demo data — optional)*
+
+   Or run `supabase/setup_all.sql` once — it bundles 0001–0005 and the seed.
+   On an **existing** project just run `0005_branding.sql`: it is idempotent,
+   adds the new hero settings and only replaces old default text.
 
 ### 2. Create the first admin user
 
@@ -62,10 +74,11 @@ Fill in the Supabase URL, anon key and service-role key from
 
 ### 4. Configure the business settings
 
-All business configuration lives in the `app_settings` table (shop name,
-WhatsApp number, minimum order value, low-stock threshold, address, timings,
-policies). The seed sets sensible demo values; edit them in the Table Editor
-(or via the admin dashboard once the admin phase is built), e.g.:
+All business configuration lives in the `app_settings` table (shop name, sale
+headline and "Heavy Discount SALE" sub-headline, legacy badge, farewell and
+thank-you messages, sale days, WhatsApp number, minimum order value, low-stock
+threshold, address, timings, policies). The seed sets demo values; edit them in
+**Admin → Settings** (or directly in the Table Editor), e.g.:
 
 ```sql
 update app_settings set value = '91XXXXXXXXXX' where key = 'whatsapp_number';
@@ -104,4 +117,6 @@ npm run dev
 1. Push this repository to GitHub.
 2. Import into Vercel; set the three environment variables from `.env.example`.
 3. Deploy. Run the SQL files against your production Supabase project
-   (without `seed.sql`, or after removing the `[DEMO]` rows).
+   (without `seed.sql`, or after removing the `[DEMO]` rows). On an existing
+   project, run `supabase/migrations/0005_branding.sql` once. Full steps in
+   `DEPLOYMENT.md`.

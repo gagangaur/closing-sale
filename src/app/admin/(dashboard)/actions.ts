@@ -410,7 +410,11 @@ export async function deleteSlot(id: string): Promise<ActionResult> {
 const EDITABLE_SETTINGS = new Set([
   "shop_name",
   "sale_title",
+  "sale_subtitle",
   "sale_message",
+  "legacy_badge",
+  "thank_you_message",
+  "sale_days",
   "min_order_value",
   "low_stock_threshold",
   "shop_address",

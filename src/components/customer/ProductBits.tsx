@@ -82,7 +82,7 @@ export function PriceBlock({
             MRP: {formatINR(mrp)}
           </span>
           <span
-            className={`font-bold text-sale ${size === "lg" ? "text-base" : "text-xs"}`}
+            className={`font-bold text-cta-dark ${size === "lg" ? "text-base" : "text-xs"}`}
           >
             {formatDiscount(discountPct)}
           </span>

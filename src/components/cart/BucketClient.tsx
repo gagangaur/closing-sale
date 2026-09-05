@@ -180,11 +180,11 @@ export function BucketClient({
         <p className="text-4xl">🧺</p>
         <p className="mt-3 font-semibold">Your bucket is empty</p>
         <p className="mt-1 text-sm text-stone-500">
-          Everything is at clearance prices — while stock lasts.
+          Heavy discounts on limited stock — {settings.sale_days || "for a short time only"}.
         </p>
         <Link
           href="/"
-          className="mt-4 inline-block rounded-xl bg-sale px-6 py-3 text-sm font-semibold text-white"
+          className="mt-4 inline-block rounded-xl bg-navy px-6 py-3 text-sm font-semibold text-white"
         >
           Browse the sale
         </Link>
@@ -251,7 +251,7 @@ export function BucketClient({
                 </span>
               </div>
               {shortages.some((s) => s.product_id === item.id) && (
-                <p className="mt-1 text-xs font-semibold text-sale">
+                <p className="mt-1 text-xs font-semibold text-danger">
                   Only {shortages.find((s) => s.product_id === item.id)?.available}{" "}
                   available now
                 </p>
@@ -268,7 +268,7 @@ export function BucketClient({
 
         {/* free gift row */}
         {eligible && !belowMin && (
-          <li className="flex items-center gap-3 bg-deal-soft p-3">
+          <li className="flex items-center gap-3 bg-cta-soft p-3">
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white text-2xl">
               🎁
             </div>
@@ -287,14 +287,14 @@ export function BucketClient({
 
       {/* progress toward minimum order */}
       {minOrder > 0 && belowMin && (
-        <div className="rounded-xl border border-deal/30 bg-deal-soft p-3">
+        <div className="rounded-xl border border-navy/20 bg-navy-soft p-3">
           <p className="text-sm font-semibold">
             {formatINR(subtotal)} / {formatINR(minOrder)} — add{" "}
             {formatINR(remainingToMin)} more to place your order.
           </p>
           <div className="mt-2 h-2 overflow-hidden rounded-full bg-white">
             <div
-              className="h-full rounded-full bg-deal transition-all"
+              className="h-full rounded-full bg-cta transition-all"
               style={{ width: `${Math.min(100, (subtotal / minOrder) * 100)}%` }}
             />
           </div>
@@ -303,14 +303,14 @@ export function BucketClient({
 
       {/* progress toward next gift tier */}
       {!belowMin && nextTier && (
-        <div className="rounded-xl border border-deal/30 bg-deal-soft p-3">
+        <div className="rounded-xl border border-navy/20 bg-navy-soft p-3">
           <p className="text-sm">
             🎁 Add {formatINR(Math.round((nextTier.threshold - subtotal) * 100) / 100)}{" "}
             more to get a <strong>FREE {nextTier.free_product_name}</strong>!
           </p>
           <div className="mt-2 h-2 overflow-hidden rounded-full bg-white">
             <div
-              className="h-full rounded-full bg-deal transition-all"
+              className="h-full rounded-full bg-cta transition-all"
               style={{ width: `${Math.min(100, (subtotal / nextTier.threshold) * 100)}%` }}
             />
           </div>
@@ -324,7 +324,7 @@ export function BucketClient({
           <span>{formatINR(subtotal)}</span>
         </div>
         {eligible && !belowMin && (
-          <div className="flex justify-between text-deal">
+          <div className="flex justify-between text-cta-dark">
             <span>Free gift: {eligible.free_product_name}</span>
             <span className="font-bold">₹0</span>
           </div>
@@ -348,7 +348,7 @@ export function BucketClient({
             onChange={(e) => setName(e.target.value)}
             autoComplete="name"
             placeholder="Your full name"
-            className="h-12 w-full rounded-lg border border-stone-300 px-3 text-base outline-none focus:border-sale focus:ring-2 focus:ring-sale/20"
+            className="h-12 w-full rounded-lg border border-stone-300 px-3 text-base outline-none focus:border-navy focus:ring-2 focus:ring-navy/20"
           />
         </label>
         <label className="block">
@@ -360,10 +360,10 @@ export function BucketClient({
             inputMode="tel"
             autoComplete="tel"
             placeholder="10-digit mobile number"
-            className="h-12 w-full rounded-lg border border-stone-300 px-3 text-base outline-none focus:border-sale focus:ring-2 focus:ring-sale/20"
+            className="h-12 w-full rounded-lg border border-stone-300 px-3 text-base outline-none focus:border-navy focus:ring-2 focus:ring-navy/20"
           />
           {phone && !phoneValid && (
-            <span className="mt-1 block text-xs text-sale">
+            <span className="mt-1 block text-xs text-danger">
               Please enter a valid mobile number.
             </span>
           )}
@@ -378,7 +378,7 @@ export function BucketClient({
             rows={2}
             maxLength={500}
             placeholder="Anything the shop should know"
-            className="w-full rounded-lg border border-stone-300 px-3 py-2 text-base outline-none focus:border-sale focus:ring-2 focus:ring-sale/20"
+            className="w-full rounded-lg border border-stone-300 px-3 py-2 text-base outline-none focus:border-navy focus:ring-2 focus:ring-navy/20"
           />
         </label>
       </section>
@@ -389,13 +389,18 @@ export function BucketClient({
         <p className="text-xs text-stone-500">
           No home delivery — you collect your order and pay there.
         </p>
+        {settings.sale_days && (
+          <p className="text-xs font-bold text-navy">
+            Sale &amp; collection {settings.sale_days} — please choose a weekend slot.
+          </p>
+        )}
 
         {confirmedLocations.map((loc) => (
           <label
             key={loc.id}
             className={`block cursor-pointer rounded-xl border p-3 ${
               locationChoice === loc.id
-                ? "border-sale bg-sale-soft"
+                ? "border-navy bg-navy-soft"
                 : "border-stone-200"
             }`}
           >
@@ -405,7 +410,7 @@ export function BucketClient({
                 name="location"
                 checked={locationChoice === loc.id}
                 onChange={() => setLocationChoice(loc.id)}
-                className="mt-1 h-4 w-4 accent-sale"
+                className="mt-1 h-4 w-4 accent-navy"
               />
               <span className="flex-1">
                 <span className="block text-sm font-semibold">{loc.name}</span>
@@ -428,7 +433,7 @@ export function BucketClient({
                       name="slot"
                       checked={slotChoice === slot.id}
                       onChange={() => setSlotChoice(slot.id)}
-                      className="h-4 w-4 accent-sale"
+                      className="h-4 w-4 accent-navy"
                     />
                     <span>
                       {formatSlotDate(slot.slot_date)} · {formatSlotTime(slot.start_time)}{" "}
@@ -464,7 +469,7 @@ export function BucketClient({
 
         <label
           className={`block cursor-pointer rounded-xl border p-3 ${
-            locationChoice === "other" ? "border-sale bg-sale-soft" : "border-stone-200"
+            locationChoice === "other" ? "border-navy bg-navy-soft" : "border-stone-200"
           }`}
         >
           <span className="flex items-start gap-2.5">
@@ -473,7 +478,7 @@ export function BucketClient({
               name="location"
               checked={locationChoice === "other"}
               onChange={() => setLocationChoice("other")}
-              className="mt-1 h-4 w-4 accent-sale"
+              className="mt-1 h-4 w-4 accent-navy"
             />
             <span className="flex-1">
               <span className="block text-sm font-semibold">
@@ -499,7 +504,7 @@ export function BucketClient({
         <ul className="list-disc space-y-1 pl-5 text-xs leading-relaxed text-stone-600">
           <li>Closing / clearance sale at heavily discounted prices.</li>
           <li>No home delivery — collection only, at your selected point or the shop.</li>
-          <li>Payment at collection. Cash preferred; UPI may be accepted at the shop.</li>
+          <li>Payment at collection. Cash preferred; UPI accepted at the shop.</li>
           <li>Inspect goods before accepting them.</li>
           <li>No returns or exchanges after purchase.</li>
           <li>Orders cannot be changed after placement — please verify your bucket now.</li>
@@ -509,7 +514,7 @@ export function BucketClient({
             type="checkbox"
             checked={agreed}
             onChange={(e) => setAgreed(e.target.checked)}
-            className="mt-0.5 h-4 w-4 accent-sale"
+            className="mt-0.5 h-4 w-4 accent-navy"
           />
           <span>I have verified my bucket and I agree to the final-sale terms above.</span>
         </label>
@@ -517,8 +522,8 @@ export function BucketClient({
 
       {/* errors */}
       {errorMsg && (
-        <div role="alert" className="rounded-xl border border-sale/30 bg-sale-soft p-3">
-          <p className="text-sm font-semibold text-sale-dark">{errorMsg}</p>
+        <div role="alert" className="rounded-xl border border-danger/30 bg-danger-soft p-3">
+          <p className="text-sm font-semibold text-danger-dark">{errorMsg}</p>
           {shortages.length > 0 && (
             <>
               <ul className="mt-1 list-disc pl-5 text-sm text-stone-700">
@@ -530,7 +535,7 @@ export function BucketClient({
               </ul>
               <button
                 onClick={fixShortages}
-                className="mt-2 rounded-lg bg-sale px-4 py-2 text-sm font-semibold text-white"
+                className="mt-2 rounded-lg bg-cta px-4 py-2 text-sm font-semibold text-white"
               >
                 Update my bucket automatically
               </button>
@@ -549,13 +554,13 @@ export function BucketClient({
           <button
             onClick={placeOrder}
             disabled={!canSubmit}
-            className="h-12 flex-1 rounded-xl bg-green-600 px-4 text-sm font-bold text-white shadow-sm transition-transform active:scale-95 disabled:bg-stone-300"
+            className="h-12 flex-1 rounded-xl bg-cta px-4 text-sm font-bold text-white shadow-sm transition-transform active:scale-95 disabled:bg-stone-300"
           >
             {submitting ? "Placing your order…" : "Place Order on WhatsApp"}
           </button>
         </div>
         {belowMin && minOrder > 0 && (
-          <p className="mx-auto mt-1 max-w-2xl text-center text-xs text-sale">
+          <p className="mx-auto mt-1 max-w-2xl text-center text-xs text-danger">
             Add {formatINR(remainingToMin)} more to reach the {formatINR(minOrder)}{" "}
             minimum order.
           </p>

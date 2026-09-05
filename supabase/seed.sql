@@ -5,13 +5,18 @@
 -- =============================================================
 
 -- ---------- settings ----------
-update app_settings set value = 'Sharma General Store' where key = 'shop_name';
-update app_settings set value = 'CLOSING SALE — Everything Must Go!' where key = 'sale_title';
-update app_settings set value = 'After 22 years we are closing our doors. Every item is at a genuine clearance price. Stock is limited — reserve now, collect and pay at pickup.' where key = 'sale_message';
+update app_settings set value = 'Radha Krishna Book Depo' where key = 'shop_name';
+update app_settings set value = 'CLOSING SALE' where key = 'sale_title';
+update app_settings set value = 'Heavy Discount SALE' where key = 'sale_subtitle';
+update app_settings set value = 'After 28 years, we are closing our doors due to an unfortunate and deeply personal circumstance.' where key = 'sale_message';
+update app_settings set value = '28 years · A family business' where key = 'legacy_badge';
+update app_settings set value = 'Thank you, Mathura, for 28 wonderful years.' where key = 'thank_you_message';
+update app_settings set value = 'ONLY ON SATURDAY & SUNDAY' where key = 'sale_days';
 update app_settings set value = '500' where key = 'min_order_value';
 update app_settings set value = '10' where key = 'low_stock_threshold';
-update app_settings set value = '12, Main Market Road, Sector 15, Gurugram' where key = 'shop_address';
-update app_settings set value = '10:00 AM – 8:00 PM, Monday to Sunday' where key = 'shop_timings';
+-- placeholder until the owner enters the real address in Admin → Settings
+update app_settings set value = 'Mathura — exact shop address will be updated shortly' where key = 'shop_address';
+update app_settings set value = 'Saturday & Sunday only, 10:00 AM – 8:00 PM' where key = 'shop_timings';
 update app_settings set value = '919999900000' where key = 'whatsapp_number';
 
 -- ---------- categories ----------
@@ -141,13 +146,18 @@ insert into offers (name, threshold, free_product_id, free_qty, priority) values
 -- ---------- collection locations ----------
 insert into locations (id, name, area, description, status, sort_order) values
   ('b0000000-0000-4000-8000-000000000001', 'Green Valley Society Gate 2',
-   'Sector 15, Gurugram', 'Collection table near Gate 2 security cabin.', 'confirmed', 1),
+   'Krishna Nagar, Mathura', 'Collection table near Gate 2 security cabin.', 'confirmed', 1),
   ('b0000000-0000-4000-8000-000000000002', 'Sunrise Apartments Club House',
-   'Sector 21, Gurugram', 'Inside the club house main hall.', 'confirmed', 2),
+   'Govardhan Road, Mathura', 'Inside the club house main hall.', 'confirmed', 2),
   ('b0000000-0000-4000-8000-000000000003', 'Palm Residency',
-   'Sector 9, Gurugram', 'Schedule to be announced. We will notify soon.', 'coming_soon', 3);
+   'Vrindavan Road, Mathura', 'Schedule to be announced. We will notify soon.', 'coming_soon', 3);
 
+-- Demo slots always fall on the coming weekend (sale is Saturday & Sunday only).
+-- next Saturday strictly after today: ((6 - dow + 6) % 7) + 1 days ahead
 insert into collection_slots (location_id, slot_date, start_time, end_time, notes) values
-  ('b0000000-0000-4000-8000-000000000001', current_date + 3, '17:00', '20:00', 'Bring your Order ID.'),
-  ('b0000000-0000-4000-8000-000000000001', current_date + 4, '10:00', '13:00', ''),
-  ('b0000000-0000-4000-8000-000000000002', current_date + 5, '17:00', '20:00', 'Parking available inside.');
+  ('b0000000-0000-4000-8000-000000000001',
+   current_date + (((6 - extract(dow from current_date)::int + 6) % 7) + 1), '10:00', '13:00', 'Bring your Order ID.'),
+  ('b0000000-0000-4000-8000-000000000001',
+   current_date + (((6 - extract(dow from current_date)::int + 6) % 7) + 2), '17:00', '20:00', ''),
+  ('b0000000-0000-4000-8000-000000000002',
+   current_date + (((6 - extract(dow from current_date)::int + 6) % 7) + 2), '10:00', '13:00', 'Parking available inside.');

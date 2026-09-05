@@ -10,7 +10,7 @@ export function CartBadge() {
     <Link
       href="/bucket"
       aria-label={`Open bucket, ${itemCount} items`}
-      className="relative flex items-center gap-1.5 rounded-full bg-sale px-4 py-2 text-sm font-semibold text-white shadow-sm active:scale-95 transition-transform"
+      className="relative flex items-center gap-1.5 rounded-full bg-navy px-4 py-2 text-sm font-semibold text-white shadow-sm active:scale-95 transition-transform"
     >
       <svg
         aria-hidden="true"
@@ -26,7 +26,7 @@ export function CartBadge() {
       </svg>
       Bucket
       {hydrated && itemCount > 0 && (
-        <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-deal px-1 text-xs font-bold text-white">
+        <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-gold px-1 text-xs font-bold text-navy-dark">
           {itemCount > 99 ? "99+" : itemCount}
         </span>
       )}

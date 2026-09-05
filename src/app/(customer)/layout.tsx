@@ -11,6 +11,12 @@ export default async function CustomerLayout({ children }: { children: ReactNode
   return (
     <>
       <Header shopName={settings.shop_name} />
+      {/* Sale-days strip: visible on every customer page, not just the hero. */}
+      {settings.sale_days && (
+        <p className="border-b border-navy/10 bg-navy-soft px-4 py-1.5 text-center text-[11px] font-extrabold uppercase tracking-widest text-navy sm:text-xs">
+          {settings.sale_days} · Limited stock · Reserve online, collect &amp; pay at pickup
+        </p>
+      )}
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-4">{children}</main>
       <Footer settings={settings} />
     </>

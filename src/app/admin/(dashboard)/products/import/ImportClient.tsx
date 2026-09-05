@@ -193,7 +193,7 @@ export function ImportClient() {
           className="mt-2 block w-full text-sm file:mr-2 file:rounded-lg file:border-0 file:bg-stone-900 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white"
         />
         {parseError && (
-          <p role="alert" className="mt-2 text-sm font-semibold text-sale">
+          <p role="alert" className="mt-2 text-sm font-semibold text-danger">
             {parseError}
           </p>
         )}
@@ -221,7 +221,7 @@ export function ImportClient() {
                 All rows valid ✓
               </span>
             ) : report ? (
-              <span className="rounded bg-sale-soft px-2 py-0.5 text-xs font-bold text-sale">
+              <span className="rounded bg-danger-soft px-2 py-0.5 text-xs font-bold text-danger">
                 {errorsByRow.size} row(s) with errors — fix the file and re-upload
               </span>
             ) : null}
@@ -243,14 +243,14 @@ export function ImportClient() {
                 {rows.map((r, i) => {
                   const errs = errorsByRow.get(i + 1) ?? [];
                   return (
-                    <tr key={i} className={errs.length ? "bg-sale-soft/60" : ""}>
+                    <tr key={i} className={errs.length ? "bg-danger-soft/60" : ""}>
                       <td className="px-3 py-1.5 text-stone-400">{i + 1}</td>
                       <td className="px-3 py-1.5 font-medium">{r.name || "—"}</td>
                       <td className="px-3 py-1.5">{r.category || "—"}</td>
                       <td className="px-3 py-1.5 text-right">{r.mrp}</td>
                       <td className="px-3 py-1.5 text-right">{r.selling_price}</td>
                       <td className="px-3 py-1.5 text-right">{r.quantity}</td>
-                      <td className="px-3 py-1.5 font-semibold text-sale">
+                      <td className="px-3 py-1.5 font-semibold text-danger">
                         {errs.join(" ")}
                       </td>
                     </tr>

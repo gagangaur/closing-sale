@@ -11,8 +11,27 @@ const FIELDS: Array<{
   kind: "text" | "textarea" | "number";
 }> = [
   { key: "shop_name", label: "Shop name", kind: "text" },
-  { key: "sale_title", label: "Closing sale title", kind: "text" },
-  { key: "sale_message", label: "Closing sale message", kind: "textarea" },
+  { key: "sale_title", label: "Headline", hint: "e.g. CLOSING SALE", kind: "text" },
+  {
+    key: "sale_subtitle",
+    label: "Sub-headline (shown prominently)",
+    hint: "e.g. Heavy Discount SALE — do not put percentages here.",
+    kind: "text",
+  },
+  {
+    key: "legacy_badge",
+    label: "Legacy badge",
+    hint: "Short farewell badge, e.g. Serving Mathura for 28 years",
+    kind: "text",
+  },
+  { key: "sale_message", label: "Farewell message", kind: "textarea" },
+  { key: "thank_you_message", label: "Thank-you line", kind: "text" },
+  {
+    key: "sale_days",
+    label: "Sale days callout",
+    hint: "Shown as a bold strip on every page, e.g. ONLY ON SATURDAY & SUNDAY",
+    kind: "text",
+  },
   {
     key: "whatsapp_number",
     label: "WhatsApp number",
@@ -45,7 +64,7 @@ const FIELDS: Array<{
 ];
 
 const inputCls =
-  "w-full rounded-lg border border-stone-300 px-3 py-2.5 text-sm outline-none focus:border-sale focus:ring-2 focus:ring-sale/20";
+  "w-full rounded-lg border border-stone-300 px-3 py-2.5 text-sm outline-none focus:border-navy focus:ring-2 focus:ring-navy/20";
 
 export function SettingsForm({ initial }: { initial: Record<string, string> }) {
   const router = useRouter();
@@ -95,7 +114,7 @@ export function SettingsForm({ initial }: { initial: Record<string, string> }) {
       ))}
 
       {error && (
-        <p role="alert" className="rounded-lg bg-sale-soft px-3 py-2 text-sm font-semibold text-sale-dark">
+        <p role="alert" className="rounded-lg bg-danger-soft px-3 py-2 text-sm font-semibold text-danger-dark">
           {error}
         </p>
       )}

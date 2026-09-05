@@ -55,7 +55,7 @@ export function FindOrderClient({ initialOrderNumber }: { initialOrderNumber: st
             onChange={(e) => setOrderNumber(e.target.value)}
             placeholder="e.g. CS-2026-000123"
             autoCapitalize="characters"
-            className="h-12 w-full rounded-lg border border-stone-300 px-3 font-mono text-base uppercase outline-none focus:border-sale focus:ring-2 focus:ring-sale/20"
+            className="h-12 w-full rounded-lg border border-stone-300 px-3 font-mono text-base uppercase outline-none focus:border-navy focus:ring-2 focus:ring-navy/20"
           />
         </label>
         <label className="block">
@@ -66,18 +66,18 @@ export function FindOrderClient({ initialOrderNumber }: { initialOrderNumber: st
             type="tel"
             inputMode="tel"
             placeholder="Phone used on the order"
-            className="h-12 w-full rounded-lg border border-stone-300 px-3 text-base outline-none focus:border-sale focus:ring-2 focus:ring-sale/20"
+            className="h-12 w-full rounded-lg border border-stone-300 px-3 text-base outline-none focus:border-navy focus:ring-2 focus:ring-navy/20"
           />
         </label>
         <button
           type="submit"
           disabled={loading || !orderNumber.trim() || !phone.trim()}
-          className="h-12 w-full rounded-xl bg-sale text-sm font-bold text-white disabled:bg-stone-300"
+          className="h-12 w-full rounded-xl bg-cta text-sm font-bold text-white disabled:bg-stone-300"
         >
           {loading ? "Looking up…" : "Find order"}
         </button>
         {error && (
-          <p role="alert" className="text-sm font-semibold text-sale">
+          <p role="alert" className="text-sm font-semibold text-danger">
             {error}
           </p>
         )}

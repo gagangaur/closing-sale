@@ -28,4 +28,7 @@ commit;
 
 -- After this: add your real products (Admin → Products or CSV import),
 -- offers, collection locations, and verify Admin → Settings
--- (shop name, WhatsApp number, minimum order, address, timings).
+-- (shop name, sale headline / sub-headline, legacy badge, thank-you message,
+-- sale days, WhatsApp number, minimum order, real Mathura address, timings).
+-- The hero fields come from migrations/0005_branding.sql (bundled in
+-- setup_all.sql); run it once on a project created before the branding update.

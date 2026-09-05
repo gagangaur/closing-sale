@@ -10,19 +10,19 @@ type Status = "pending" | "confirmed" | "ready" | "collected" | "cancelled" | "e
 const TRANSITIONS: Record<Status, Array<{ to: Exclude<Status, "pending">; label: string; style: string; confirm?: string }>> = {
   pending: [
     { to: "confirmed", label: "Confirm order", style: "bg-blue-600 text-white" },
-    { to: "ready", label: "Mark ready", style: "bg-green-600 text-white" },
-    { to: "cancelled", label: "Cancel", style: "border border-sale text-sale", confirm: "Cancel this order and release its reserved stock?" },
+    { to: "ready", label: "Mark ready", style: "bg-cta text-white" },
+    { to: "cancelled", label: "Cancel", style: "border border-danger text-danger", confirm: "Cancel this order and release its reserved stock?" },
     { to: "expired", label: "Expire", style: "border border-stone-300 text-stone-600", confirm: "Expire this order and release its reserved stock?" },
   ],
   confirmed: [
-    { to: "ready", label: "Mark ready for collection", style: "bg-green-600 text-white" },
+    { to: "ready", label: "Mark ready for collection", style: "bg-cta text-white" },
     { to: "collected", label: "Mark collected & paid", style: "bg-stone-900 text-white", confirm: "Mark as collected? Stock will be deducted permanently." },
-    { to: "cancelled", label: "Cancel", style: "border border-sale text-sale", confirm: "Cancel this order and release its reserved stock?" },
+    { to: "cancelled", label: "Cancel", style: "border border-danger text-danger", confirm: "Cancel this order and release its reserved stock?" },
     { to: "expired", label: "Expire", style: "border border-stone-300 text-stone-600", confirm: "Expire this order and release its reserved stock?" },
   ],
   ready: [
     { to: "collected", label: "Mark collected & paid", style: "bg-stone-900 text-white", confirm: "Mark as collected? Stock will be deducted permanently." },
-    { to: "cancelled", label: "Cancel", style: "border border-sale text-sale", confirm: "Cancel this order and release its reserved stock?" },
+    { to: "cancelled", label: "Cancel", style: "border border-danger text-danger", confirm: "Cancel this order and release its reserved stock?" },
     { to: "expired", label: "Expire", style: "border border-stone-300 text-stone-600", confirm: "Expire this order and release its reserved stock?" },
   ],
   collected: [],
@@ -72,7 +72,7 @@ export function OrderStatusButtons({
         value={note}
         onChange={(e) => setNote(e.target.value)}
         placeholder="Optional note for the status change…"
-        className="h-10 w-full rounded-lg border border-stone-300 px-3 text-sm outline-none focus:border-sale"
+        className="h-10 w-full rounded-lg border border-stone-300 px-3 text-sm outline-none focus:border-navy"
       />
       <div className="flex flex-wrap gap-2">
         {options.map((opt) => (
@@ -86,7 +86,7 @@ export function OrderStatusButtons({
           </button>
         ))}
       </div>
-      {error && <p className="text-sm font-semibold text-sale">{error}</p>}
+      {error && <p className="text-sm font-semibold text-danger">{error}</p>}
     </div>
   );
 }

@@ -1,4 +1,6 @@
+import { POLICY_LINE } from "@/lib/branding";
 import { formatINR, formatSlotDate, formatSlotTime } from "@/lib/format";
+import type { PublicSettings } from "@/lib/types";
 
 export type WhatsAppOrder = {
   order_number: string;
@@ -100,4 +102,49 @@ export function buildWhatsAppUrl(whatsappNumber: string, message: string): strin
   const digits = whatsappNumber.replace(/[^0-9]/g, "");
   if (digits.length < 10) return null;
   return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
+}
+
+/**
+ * Forwardable announcement for customers to share (no recipient — WhatsApp
+ * opens its contact picker). Short, no percentages, policy line verbatim.
+ */
+export function buildShareMessage(
+  settings: Pick<
+    PublicSettings,
+    | "shop_name"
+    | "sale_title"
+    | "sale_subtitle"
+    | "sale_message"
+    | "thank_you_message"
+    | "sale_days"
+    | "shop_address"
+    | "shop_timings"
+    | "min_order_value"
+  >,
+  siteUrl?: string
+): string {
+  const lines: string[] = [];
+  lines.push(`*${settings.shop_name} — ${settings.sale_title}*`);
+  if (settings.sale_message) lines.push(settings.sale_message);
+  if (settings.thank_you_message) lines.push(`_${settings.thank_you_message}_`);
+  lines.push("");
+  lines.push(`*${settings.sale_subtitle}* · Limited stock`);
+  lines.push(`*${settings.sale_days}*`);
+  if (settings.shop_address) lines.push(`📍 ${settings.shop_address}`);
+  if (settings.shop_timings) lines.push(`🕒 ${settings.shop_timings}`);
+  lines.push("");
+  lines.push(
+    `Reserve online, collect & pay at pickup${
+      settings.min_order_value > 0 ? ` · Minimum order ${formatINR(settings.min_order_value)}` : ""
+    }`
+  );
+  if (siteUrl) lines.push(siteUrl);
+  lines.push("");
+  lines.push(POLICY_LINE);
+  return lines.join("\n");
+}
+
+/** Share link without a recipient — WhatsApp asks who to send it to. */
+export function buildShareUrl(message: string): string {
+  return `https://wa.me/?text=${encodeURIComponent(message)}`;
 }

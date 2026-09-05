@@ -1,4 +1,4 @@
-# Closing Sale — Feature Guide
+# Radha Krishna Book Depo — Closing Sale: Feature Guide
 
 Everything the app does and how to use it. Two areas: the **customer website**
 (what shoppers see) and the **admin dashboard** at `/admin` (what the
@@ -8,9 +8,30 @@ shopkeeper uses).
 
 ## Customer website
 
+### Hero, share card & weekend strip
+- **Hero** (navy; every line editable in admin Settings), top to bottom: shop
+  name → **CLOSING SALE** → gold **Heavy Discount SALE** sub-headline → legacy
+  badge ("Serving Mathura for 28 years") → farewell message → "Thank you,
+  Mathura, for 28 wonderful years." → a gold **Limited Stock / ONLY ON
+  SATURDAY & SUNDAY** strip → reservation pills (reserve online, minimum order,
+  heavy discounts) → free-gift tiers.
+- **Share this sale** card (white, at the bottom of the hero, made to be
+  screenshotted or forwarded): shop name, headline, sub-headline, sale days,
+  address, timings, how to reserve, and the policy line kept verbatim —
+  *Final sale — no returns/exchanges · No home delivery · Cash preferred, UPI
+  accepted at the shop · No online payment.* **Share on WhatsApp** opens
+  WhatsApp's contact picker with a short forwardable message (no recipient
+  pre-filled); **Copy message** copies the same text.
+- **Weekend strip**: a slim gold "ONLY ON SATURDAY & SUNDAY · Limited stock ·
+  Reserve online, collect & pay at pickup" bar sits under the header on
+  **every** customer page, not only the home page.
+- **Look & feel**: navy is the primary colour, green is used for all positive
+  actions (add to bucket, place order, WhatsApp), gold for small accents
+  (weekend strip, legacy badge); red appears only for errors, out-of-stock and
+  destructive admin actions. No discount percentages appear in marketing copy.
+
 ### Browsing & search
-- **Home page** shows the closing-sale banner (title, message, minimum order,
-  free-gift tiers — all configurable in admin Settings), then the catalog.
+- Below the hero comes the catalog.
 - **Search bar** matches product names, descriptions, category names and tags
   as you type. **Category chips** filter; the **sort menu** offers Newest,
   Popular (by real order data), Price low→high, Price high→low.
@@ -19,7 +40,8 @@ shopkeeper uses).
   - ⭐ **Popular Picks** — best sellers computed from actual orders.
 - Products load 24 at a time with a **Load more** button — the browser never
   downloads the whole catalog.
-- Every product card shows **MRP struck through, % OFF, sale price** and a
+- Every product card shows **MRP struck through, a green % OFF badge (the real
+  discount from MRP — factual data, not marketing copy), sale price** and a
   stock badge. Tapping a card opens the **product page** with description,
   tags and a larger add-to-bucket control.
 
@@ -145,9 +167,16 @@ Sign in at `/admin/login`. Only users listed in the `admin_users` table get in
 
 ### Settings
 Everything configurable, live, no code changes:
-shop name · sale title & message · **WhatsApp number** (where orders arrive) ·
-**minimum order value** · **low-stock threshold** · shop address & timings ·
-payment / collection instructions · final-sale terms · extra customer notes.
+shop name · sale headline (**CLOSING SALE**) · sale sub-headline (**Heavy
+Discount SALE**) · legacy badge · sale message · thank-you message · sale days
+(**ONLY ON SATURDAY & SUNDAY** — shown in the hero, the share card and the strip
+on every page) · **WhatsApp number** (where orders arrive) · **minimum order
+value** · **low-stock threshold** · shop address & timings · payment /
+collection instructions · final-sale terms · extra customer notes.
+
+The four hero fields (`sale_subtitle`, `legacy_badge`, `thank_you_message`,
+`sale_days`) are added by `supabase/migrations/0005_branding.sql` — run it once
+on a project created before the branding update.
 
 ---
 

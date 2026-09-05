@@ -90,7 +90,7 @@ export default async function InventoryPage({
           name="q"
           defaultValue={q}
           placeholder="Search products…"
-          className="h-11 min-w-40 flex-1 rounded-xl border border-stone-300 bg-white px-3 text-sm outline-none focus:border-sale"
+          className="h-11 min-w-40 flex-1 rounded-xl border border-stone-300 bg-white px-3 text-sm outline-none focus:border-navy"
         />
         <select
           name="category"
@@ -116,7 +116,7 @@ export default async function InventoryPage({
       </div>
 
       {error ? (
-        <p className="rounded-xl bg-sale-soft p-4 text-sm font-semibold text-sale-dark">
+        <p className="rounded-xl bg-danger-soft p-4 text-sm font-semibold text-danger-dark">
           Could not load inventory: {error.message}
         </p>
       ) : rows.length === 0 ? (
@@ -169,9 +169,9 @@ export default async function InventoryPage({
                       <span
                         className={
                           isOut
-                            ? "rounded bg-sale-soft px-1.5 py-0.5 text-xs font-bold text-sale"
+                            ? "rounded bg-danger-soft px-1.5 py-0.5 text-xs font-bold text-danger"
                             : isVeryLow
-                              ? "rounded bg-sale-soft px-1.5 py-0.5 text-xs font-bold text-sale-dark"
+                              ? "rounded bg-danger-soft px-1.5 py-0.5 text-xs font-bold text-danger-dark"
                               : isLow
                                 ? "rounded bg-deal-soft px-1.5 py-0.5 text-xs font-bold text-deal"
                                 : "font-semibold"

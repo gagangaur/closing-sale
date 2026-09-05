@@ -34,7 +34,7 @@ export type AdminLocation = {
 };
 
 const inputCls =
-  "h-10 w-full rounded-lg border border-stone-300 px-3 text-sm outline-none focus:border-sale focus:ring-2 focus:ring-sale/20";
+  "h-10 w-full rounded-lg border border-stone-300 px-3 text-sm outline-none focus:border-navy focus:ring-2 focus:ring-navy/20";
 
 const STATUS_BADGE: Record<AdminLocation["status"], { label: string; cls: string }> = {
   confirmed: { label: "Confirmed", cls: "bg-green-100 text-green-700" },
@@ -92,7 +92,7 @@ function LocationForm({
           <input
             value={form.area}
             onChange={(e) => setForm({ ...form, area: e.target.value })}
-            placeholder="e.g. Sector 15, Gurugram"
+            placeholder="e.g. Krishna Nagar, Mathura"
             className={inputCls}
           />
         </label>
@@ -128,7 +128,7 @@ function LocationForm({
           />
         </label>
       </div>
-      {error && <p className="text-sm font-semibold text-sale">{error}</p>}
+      {error && <p className="text-sm font-semibold text-danger">{error}</p>}
       <div className="flex gap-2">
         <button
           onClick={submit}
@@ -206,7 +206,7 @@ function SlotRowForm({
           className="h-9 min-w-32 flex-1 rounded-lg border border-stone-300 px-2 text-sm"
         />
       </div>
-      {error && <p className="text-xs font-semibold text-sale">{error}</p>}
+      {error && <p className="text-xs font-semibold text-danger">{error}</p>}
       <div className="flex gap-2">
         <button
           onClick={submit}

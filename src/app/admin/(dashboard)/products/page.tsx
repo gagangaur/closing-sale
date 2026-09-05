@@ -88,7 +88,7 @@ export default async function ProductsPage({
           name="q"
           defaultValue={q}
           placeholder="Search products…"
-          className="h-11 flex-1 rounded-xl border border-stone-300 bg-white px-3 text-sm outline-none focus:border-sale"
+          className="h-11 flex-1 rounded-xl border border-stone-300 bg-white px-3 text-sm outline-none focus:border-navy"
         />
         <button className="h-11 rounded-xl bg-stone-900 px-5 text-sm font-semibold text-white">
           Search
@@ -103,7 +103,7 @@ export default async function ProductsPage({
       </div>
 
       {error ? (
-        <p className="rounded-xl bg-sale-soft p-4 text-sm font-semibold text-sale-dark">
+        <p className="rounded-xl bg-danger-soft p-4 text-sm font-semibold text-danger-dark">
           Could not load products: {error.message}
         </p>
       ) : rows.length === 0 ? (
@@ -153,13 +153,13 @@ export default async function ProductsPage({
                     <td className="px-3 py-2 text-right font-semibold">
                       {formatINR(p.selling_price)}
                     </td>
-                    <td className="px-3 py-2 text-right text-sale">
+                    <td className="px-3 py-2 text-right text-cta-dark">
                       {Number.parseFloat(Number(p.discount_pct).toFixed(2))}%
                     </td>
                     <td className="px-3 py-2 text-right">
                       <span
                         className={
-                          (inv?.available_qty ?? 0) <= 0 ? "font-bold text-sale" : "font-semibold"
+                          (inv?.available_qty ?? 0) <= 0 ? "font-bold text-danger" : "font-semibold"
                         }
                       >
                         {inv?.available_qty ?? 0}

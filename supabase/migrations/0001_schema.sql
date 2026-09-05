@@ -235,13 +235,17 @@ create trigger app_settings_touch before update on app_settings
 
 -- ---------- default settings ----------
 insert into app_settings (key, value, public) values
-  ('shop_name',               'My Shop',                                          true),
+  ('shop_name',               'Radha Krishna Book Depo',                          true),
   ('sale_title',              'CLOSING SALE',                                     true),
-  ('sale_message',            'The shop is closing. Everything must go at genuine clearance prices. Limited stock — buy while it lasts!', true),
+  ('sale_subtitle',           'Heavy Discount SALE',                              true),
+  ('sale_message',            'After 28 years, we are closing our doors due to an unfortunate and deeply personal circumstance.', true),
+  ('legacy_badge',            '28 years · A family business',                     true),
+  ('thank_you_message',       'Thank you, Mathura, for 28 wonderful years.',      true),
+  ('sale_days',               'ONLY ON SATURDAY & SUNDAY',                        true),
   ('min_order_value',         '500',                                              true),
   ('low_stock_threshold',     '10',                                               true),
-  ('shop_address',            'Shop address not configured yet',                  true),
-  ('shop_timings',            '10:00 AM – 8:00 PM, all days',                     true),
+  ('shop_address',            'Mathura — exact shop address will be updated shortly', true),
+  ('shop_timings',            'Saturday & Sunday only, 10:00 AM – 8:00 PM',        true),
   ('payment_instructions',    'Pay at collection. Cash preferred; UPI accepted at the shop.', true),
   ('collection_instructions', 'Bring your Order ID when you come to collect.',    true),
   ('final_sale_terms',        'This is a final clearance sale. Inspect goods before accepting. No returns or exchanges after purchase. Orders cannot be modified after placement.', true),

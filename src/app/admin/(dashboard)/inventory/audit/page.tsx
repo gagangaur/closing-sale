@@ -77,7 +77,7 @@ export default async function AuditPage({
           name="q"
           defaultValue={q}
           placeholder="Filter by product name…"
-          className="h-11 flex-1 rounded-xl border border-stone-300 bg-white px-3 text-sm outline-none focus:border-sale"
+          className="h-11 flex-1 rounded-xl border border-stone-300 bg-white px-3 text-sm outline-none focus:border-navy"
         />
         <button className="h-11 rounded-xl bg-stone-900 px-5 text-sm font-semibold text-white">
           Filter
@@ -85,7 +85,7 @@ export default async function AuditPage({
       </form>
 
       {error ? (
-        <p className="rounded-xl bg-sale-soft p-4 text-sm font-semibold text-sale-dark">
+        <p className="rounded-xl bg-danger-soft p-4 text-sm font-semibold text-danger-dark">
           Could not load audit log: {error.message}
         </p>
       ) : rows.length === 0 ? (
@@ -140,7 +140,7 @@ export default async function AuditPage({
                     {r.prev_total} →{" "}
                     <strong
                       className={
-                        r.change > 0 ? "text-green-700" : r.change < 0 ? "text-sale" : ""
+                        r.change > 0 ? "text-green-700" : r.change < 0 ? "text-danger" : ""
                       }
                     >
                       {r.new_total}

@@ -1,4 +1,4 @@
-# Deployment Guide — Closing Sale
+# Deployment Guide — Radha Krishna Book Depo Closing Sale
 
 Path from local development to a live site on Vercel.
 
@@ -15,8 +15,12 @@ production project:
 
 1. Create the project (choose the region closest to your customers).
 2. SQL Editor → run **`supabase/setup_all.sql`** (or the individual files
-   `migrations/0001…0004` in order) — **without** `seed.sql` for production,
+   `migrations/0001…0005` in order) — **without** `seed.sql` for production,
    or run `supabase/reset_demo_data.sql` later to wipe demo data.
+   **Existing project?** Run `supabase/migrations/0005_branding.sql` once —
+   it is idempotent: it adds the `sale_subtitle`, `legacy_badge`,
+   `thank_you_message` and `sale_days` settings and replaces old demo text
+   (shop name, headline, message) without touching values you already edited.
 3. Storage → **New bucket** → name `product-images`, enable **Public bucket**.
 4. Authentication → Users → **Add user** (the shopkeeper's email + password,
    tick auto-confirm). Then SQL Editor:
@@ -55,16 +59,25 @@ git push -u origin master
 ## 5. Configure the business (in the app, not in code)
 
 Admin → **Settings**:
-- Shop name, sale title & message
+- Shop name (Radha Krishna Book Depo), sale headline (CLOSING SALE) &
+  sub-headline (Heavy Discount SALE), legacy badge, farewell message,
+  thank-you message, sale days (ONLY ON SATURDAY & SUNDAY)
 - **WhatsApp number** (digits with country code — order messages go here)
 - Minimum order value, low-stock threshold
-- Shop address & timings, payment/collection instructions, final-sale terms
+- Shop address (replace the seed's Mathura placeholder with the real address)
+  & timings, payment/collection instructions, final-sale terms
 
 Admin → **Products / Offers / Locations**: real catalog (CSV import for
 bulk), gift tiers, collection points with date/time slots.
 
 ## 6. Go-live checklist
 
+- [ ] `supabase/migrations/0005_branding.sql` run on existing projects — the
+      four hero fields appear in Admin → Settings
+- [ ] Hero text reviewed: correct shop name, no "Everything Must Go", no
+      discount percentages; real Mathura shop address entered
+- [ ] **Share this sale** tested: *Share on WhatsApp* opens with the message,
+      *Copy message* works, policy line intact
 - [ ] Demo data removed (`supabase/reset_demo_data.sql`) — this also resets
       order numbering
 - [ ] Real products with images and stock quantities entered

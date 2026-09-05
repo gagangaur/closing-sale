@@ -55,7 +55,7 @@ export default async function HomePage({
         <>
           <SectionRow
             title="🔥 Almost Gone"
-            subtitle="Low stock — grab them now"
+            subtitle="Only a few left"
             products={almostGone?.items ?? []}
             threshold={catalog.low_stock_threshold}
             accent

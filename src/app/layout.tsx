@@ -15,15 +15,18 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Closing Sale — Everything Must Go",
-    template: "%s | Closing Sale",
+    default: "Radha Krishna Book Depo — Closing Sale",
+    template: "%s | Radha Krishna Book Depo",
   },
   description:
-    "Shop closing sale: genuine clearance prices, limited stock. Reserve online, collect and pay at pickup. No home delivery, no online payment.",
+    "Radha Krishna Book Depo, Mathura, is closing after 28 years. Heavy Discount SALE on limited stock — only on Saturday & Sunday. Reserve online, collect and pay at pickup. No home delivery, no online payment.",
+  applicationName: "Radha Krishna Book Depo",
   openGraph: {
-    title: "Closing Sale — Everything Must Go",
+    title: "Radha Krishna Book Depo — Closing Sale · Heavy Discount SALE",
     description:
-      "Genuine clearance prices, limited stock. Reserve your order online and collect at pickup.",
+      "After 28 years, Radha Krishna Book Depo is closing its doors. Heavy discounts, limited stock — only on Saturday & Sunday. Reserve online, collect & pay at pickup.",
+    siteName: "Radha Krishna Book Depo",
+    locale: "en_IN",
     type: "website",
   },
 };
@@ -31,7 +34,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#dc2626",
+  themeColor: "#1e3a8a",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

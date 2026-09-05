@@ -29,7 +29,7 @@ export type ProductFormInitial = {
 } | null;
 
 const inputCls =
-  "h-11 w-full rounded-lg border border-stone-300 px-3 text-sm outline-none focus:border-sale focus:ring-2 focus:ring-sale/20";
+  "h-11 w-full rounded-lg border border-stone-300 px-3 text-sm outline-none focus:border-navy focus:ring-2 focus:ring-navy/20";
 
 export function ProductForm({
   categories,
@@ -170,7 +170,7 @@ export function ProductForm({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={4}
-              className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm outline-none focus:border-sale focus:ring-2 focus:ring-sale/20"
+              className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm outline-none focus:border-navy focus:ring-2 focus:ring-navy/20"
             />
           </label>
           <div className="grid gap-3 sm:grid-cols-2">
@@ -288,7 +288,7 @@ export function ProductForm({
         )}
 
         {error && (
-          <p role="alert" className="rounded-lg bg-sale-soft px-3 py-2 text-sm font-semibold text-sale-dark">
+          <p role="alert" className="rounded-lg bg-danger-soft px-3 py-2 text-sm font-semibold text-danger-dark">
             {error}
           </p>
         )}
@@ -311,7 +311,7 @@ export function ProductForm({
               type="checkbox"
               checked={active}
               onChange={(e) => onActiveToggle(e.target.checked)}
-              className="h-4 w-4 accent-sale"
+              className="h-4 w-4 accent-navy"
             />
             Active (visible in shop)
           </label>
@@ -385,8 +385,8 @@ export function ProductForm({
               disabled={pending}
               className={`h-10 w-full rounded-lg text-sm font-semibold ${
                 initial.archived
-                  ? "bg-green-600 text-white"
-                  : "border border-sale text-sale"
+                  ? "bg-cta text-white"
+                  : "border border-danger text-danger"
               }`}
             >
               {initial.archived ? "Restore from archive" : "Archive product"}

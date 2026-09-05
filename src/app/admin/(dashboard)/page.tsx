@@ -67,8 +67,8 @@ export default async function AdminHome() {
 
   if (statsRes.error) {
     return (
-      <div className="rounded-xl border border-sale/30 bg-sale-soft p-4 text-sm">
-        <p className="font-semibold text-sale-dark">
+      <div className="rounded-xl border border-danger/30 bg-danger-soft p-4 text-sm">
+        <p className="font-semibold text-danger-dark">
           Could not load dashboard data: {statsRes.error.message}
         </p>
         <p className="mt-1 text-stone-600">
@@ -155,7 +155,7 @@ export default async function AdminHome() {
                     <p className="text-xs text-stone-500">{formatINR(row.selling_price)}</p>
                   </div>
                   {row.out_of_stock ? (
-                    <span className="shrink-0 rounded bg-sale-soft px-2 py-0.5 text-xs font-bold text-sale">
+                    <span className="shrink-0 rounded bg-danger-soft px-2 py-0.5 text-xs font-bold text-danger">
                       Out of stock
                     </span>
                   ) : (

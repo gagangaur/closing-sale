@@ -72,7 +72,7 @@ export function CatalogGrid({
       </div>
 
       {error && (
-        <p role="alert" className="mt-4 text-center text-sm text-sale">
+        <p role="alert" className="mt-4 text-center text-sm text-danger">
           {error}
         </p>
       )}

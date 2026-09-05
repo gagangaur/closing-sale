@@ -83,7 +83,7 @@ export function InventoryAdjust({
           below that.
         </p>
       )}
-      {error && <p className="text-[11px] font-semibold text-sale">{error}</p>}
+      {error && <p className="text-[11px] font-semibold text-danger">{error}</p>}
       <div className="flex gap-1.5">
         <button
           onClick={apply}

@@ -38,7 +38,7 @@ export default function AdminLoginPage() {
       >
         <div>
           <h1 className="text-lg font-bold">Admin sign in</h1>
-          <p className="text-sm text-stone-500">Closing Sale dashboard</p>
+          <p className="text-sm text-stone-500">Radha Krishna Book Depo — admin dashboard</p>
         </div>
         <label className="block">
           <span className="mb-1 block text-sm font-medium">Email</span>
@@ -48,7 +48,7 @@ export default function AdminLoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
             required
-            className="h-11 w-full rounded-lg border border-stone-300 px-3 outline-none focus:border-sale focus:ring-2 focus:ring-sale/20"
+            className="h-11 w-full rounded-lg border border-stone-300 px-3 outline-none focus:border-navy focus:ring-2 focus:ring-navy/20"
           />
         </label>
         <label className="block">
@@ -59,11 +59,11 @@ export default function AdminLoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
             required
-            className="h-11 w-full rounded-lg border border-stone-300 px-3 outline-none focus:border-sale focus:ring-2 focus:ring-sale/20"
+            className="h-11 w-full rounded-lg border border-stone-300 px-3 outline-none focus:border-navy focus:ring-2 focus:ring-navy/20"
           />
         </label>
         {error && (
-          <p role="alert" className="text-sm font-semibold text-sale">
+          <p role="alert" className="text-sm font-semibold text-danger">
             {error}
           </p>
         )}
