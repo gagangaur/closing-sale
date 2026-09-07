@@ -1,7 +1,26 @@
-// Minimal, dependency-free CSV parse/serialize (RFC 4180 quoting).
+// Minimal, dependency-free delimited-text parse/serialize (RFC 4180 quoting).
 
-/** Parse CSV text into rows of fields. Handles quoted fields, "" escapes, CRLF. */
-export function parseCsv(text: string): string[][] {
+/**
+ * Guess the delimiter from the first line. Excel / Google Sheets exports vary:
+ * "CSV" is comma, "Text (Tab delimited)" is tab, some locales use semicolon.
+ */
+export function detectDelimiter(text: string): string {
+  const firstLine = text.replace(/^\uFEFF/, "").split(/\r?\n/, 1)[0] ?? "";
+  const counts: Array<[string, number]> = [
+    ["\t", (firstLine.match(/\t/g) ?? []).length],
+    [";", (firstLine.match(/;/g) ?? []).length],
+    [",", (firstLine.match(/,/g) ?? []).length],
+  ];
+  counts.sort((a, b) => b[1] - a[1]);
+  return counts[0][1] > 0 ? counts[0][0] : ",";
+}
+
+/**
+ * Parse delimited text into rows of fields. Handles quoted fields, "" escapes,
+ * CRLF line endings and a leading UTF-8 BOM (Excel "CSV UTF-8" adds one).
+ */
+export function parseCsv(text: string, delimiter = ","): string[][] {
+  const src = text.replace(/^\uFEFF/, "");
   const rows: string[][] = [];
   let row: string[] = [];
   let field = "";
@@ -19,11 +38,11 @@ export function parseCsv(text: string): string[][] {
     row = [];
   };
 
-  while (i < text.length) {
-    const ch = text[i];
+  while (i < src.length) {
+    const ch = src[i];
     if (inQuotes) {
       if (ch === '"') {
-        if (text[i + 1] === '"') {
+        if (src[i + 1] === '"') {
           field += '"';
           i += 2;
           continue;
@@ -41,13 +60,13 @@ export function parseCsv(text: string): string[][] {
       i++;
       continue;
     }
-    if (ch === ",") {
+    if (ch === delimiter) {
       pushField();
       i++;
       continue;
     }
     if (ch === "\r") {
-      if (text[i + 1] === "\n") i++;
+      if (src[i + 1] === "\n") i++;
       pushRow();
       i++;
       continue;

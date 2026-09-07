@@ -8,7 +8,7 @@ import {
   type ImportReport,
   type ImportRow,
 } from "@/app/admin/(dashboard)/actions";
-import { parseCsv, toCsv } from "@/lib/csv";
+import { detectDelimiter, parseCsv, toCsv } from "@/lib/csv";
 
 const TEMPLATE_HEADER = [
   "name",
@@ -63,7 +63,7 @@ export function ImportClient() {
 
   function downloadTemplate() {
     const csv = toCsv([TEMPLATE_HEADER, TEMPLATE_EXAMPLE]);
-    const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" });
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = "product-import-template.csv";
@@ -79,10 +79,12 @@ export function ImportClient() {
     if (!file) return;
     setFileName(file.name);
 
-    const text = await file.text();
-    const parsed = parseCsv(text);
+    // Accept comma, tab (Excel "Text (Tab delimited)") or semicolon files,
+    // with or without a BOM.
+    const text = (await file.text()).replace(/^\uFEFF/, "");
+    const parsed = parseCsv(text, detectDelimiter(text));
     if (parsed.length < 2) {
-      setParseError("The CSV needs a header row and at least one data row.");
+      setParseError("The file needs a header row and at least one data row.");
       return;
     }
 
@@ -95,7 +97,7 @@ export function ImportClient() {
     if (colFor.name === undefined || colFor.mrp === undefined ||
         colFor.selling_price === undefined || colFor.quantity === undefined) {
       setParseError(
-        'The CSV must have at least these columns: "name", "mrp", "selling_price", "quantity". Download the template to see the format.'
+        'The file must have at least these columns: "name", "mrp", "selling_price", "quantity" (comma, tab or semicolon separated). Download the template to see the format.'
       );
       return;
     }
@@ -152,6 +154,12 @@ export function ImportClient() {
   if (report && !report.ok) {
     for (const e of report.errors) errorsByRow.set(e.row, e.errors);
   }
+  // names repeated inside the file are allowed but usually a mistake
+  const nameCounts = new Map<string, number>();
+  for (const r of rows ?? []) {
+    const k = r.name.trim().toLowerCase();
+    if (k) nameCounts.set(k, (nameCounts.get(k) ?? 0) + 1);
+  }
 
   return (
     <div className="space-y-4">
@@ -188,7 +196,7 @@ export function ImportClient() {
         </h2>
         <input
           type="file"
-          accept=".csv,text/csv"
+          accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values,text/plain"
           onChange={(e) => onFile(e.target.files?.[0] ?? null)}
           className="mt-2 block w-full text-sm file:mr-2 file:rounded-lg file:border-0 file:bg-stone-900 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white"
         />
@@ -252,6 +260,12 @@ export function ImportClient() {
                       <td className="px-3 py-1.5 text-right">{r.quantity}</td>
                       <td className="px-3 py-1.5 font-semibold text-danger">
                         {errs.join(" ")}
+                        {errs.length === 0 &&
+                          (nameCounts.get(r.name.trim().toLowerCase()) ?? 0) > 1 && (
+                            <span className="font-medium text-deal">
+                              ⚠ Same name appears more than once in this file
+                            </span>
+                          )}
                       </td>
                     </tr>
                   );
